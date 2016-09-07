@@ -1,1 +1,1 @@
-web: gunicorn dictbot.wsgi
+web: gunicorn Weatherbot.wsgi

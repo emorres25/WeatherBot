@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from app.views import dictbot
+from main.views import dictbot
 urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'weatherbot.views.home', name='home'),

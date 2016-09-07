@@ -31,7 +31,7 @@ def get_meaning(fbid, recieved_message):
 
 def send_yo():
     requests.post("http://api.justyo.co/yo/", data={'api_token': yo_token, 'username': yo_username, 'text': "dictbot was recently used."})
-'''
+
 def get_weather(fbid, lati,longi):
     url = 'http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&APPID=%s' % (lati,longi,weather_api)
     r = requests.get(url)
@@ -42,7 +42,7 @@ def get_weather(fbid, lati,longi):
     response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":main}})
     status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
     pprint(status.json())
-'''
+
 
 def post_msg(fbid,text):
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'% access_token
@@ -71,10 +71,10 @@ class dictbot(generic.View):
                     try:  
                         lati = message['message']['attachments'][0]['payload']['coordinates']['lat']
                         longi = message['message']['attachments'][0]['payload']['coordinates']['long']
-                        text = "Lat is : %s and long is %s" % (lati,longi)
-                        post_msg(message['sender']['id'], text)
+                        #text = "Lat is : %s and long is %s" % (lati,longi)
+                        #post_msg(message['sender']['id'], text)
 
-                        #get_weather(message['sender']['id'], lati, longi)
+                        get_weather(message['sender']['id'], lati, longi)
 
                         #get_meaning(message['sender']['id'], message['message']['attachments'][0]['payload']['coordinates'])
                         #get_meaning(message['sender']['id'], message['message']['text'])

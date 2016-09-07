@@ -33,7 +33,7 @@ def send_yo():
     requests.post("http://api.justyo.co/yo/", data={'api_token': yo_token, 'username': yo_username, 'text': "dictbot was recently used."})
 
 def get_weather(fbid, lati,longi):
-    url = 'api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&APPID=%s' % (lati,longi,weather_api)
+    url = 'http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&APPID=%s' % (lati,longi,weather_api)
     r = requests.get(url)
     data = r.text().json()
     main = data['weather'][0]['description']

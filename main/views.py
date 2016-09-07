@@ -43,6 +43,14 @@ def get_weather(fbid, lati,longi):
     status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
     pprint(status.json())
 
+
+def post_msg(fbid, text):
+    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'% access_token
+    response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":text})
+    status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
+    pprint(status.json())
+
+
 class dictbot(generic.View):
     def get(self, request, *args, **kwargs):
         if self.request.GET['hub.verify_token'] == verify_token:
@@ -66,10 +74,7 @@ class dictbot(generic.View):
                         lati = 'papa'
                         longi = 'mama'
                         text = "lat is: %s and long is %s" % (lati, longi)
-                        post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'% access_token
-                        response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":text})
-                        status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
-                        pprint(status.json())
+                        post_msg(message['sender']['id'], text)
 
                         #get_weather(message['sender']['id'], lati, longi)
 

@@ -69,9 +69,9 @@ class dictbot(generic.View):
             for message in entry['messaging']: 
                 if 'message' in message: 
                     try:  
-                        #lati = message['message']['attachments'][0]['payload']['coordinates']['lat']
-                        #longi = message['message']['attachments'][0]['payload']['coordinates']['long']
-                        text = "Hi!"
+                        lati = message['message']['attachments'][0]['payload']['coordinates']['lat']
+                        longi = message['message']['attachments'][0]['payload']['coordinates']['long']
+                        text = "Lat is : %s and long is %s" % (lati,longi)
                         post_msg(message['sender']['id'], text)
 
                         #get_weather(message['sender']['id'], lati, longi)

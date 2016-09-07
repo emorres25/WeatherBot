@@ -35,7 +35,7 @@ def send_yo():
 def get_weather(fbid, lati,longi):
     url = 'http://api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&APPID=%s' % (lati,longi,weather_api)
     r = requests.get(url)
-    data = json.loads(r.text())
+    data = json.loads(r.text)
     main = data['weather'][0]['description']
 
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'% access_token

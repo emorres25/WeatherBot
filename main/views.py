@@ -82,5 +82,4 @@ class dictbot(generic.View):
                     except Exception as e:
                         print e
                         get_meaning(message['sender']['id'], 'Please send a valid text.')    
-                        send_yo()
         return HttpResponse()

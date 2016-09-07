@@ -37,13 +37,13 @@ def get_weather(fbid, lati,longi):
     r = requests.get(url)
     data = json.loads(r.text)
     place = data['sys']['country']
-    temp = float(data['main']['temp']) - 273.15
+    temp = str(int(data['main']['temp']) - 273.15)
     wind = data['wind']['speed']
     #rain = data['rain']['3h']
     name = data['name']
     desc = data['weather'][0]['description']
 
-    text = '''***WEATHER REPORT***\nAt %s, %s\nCurrent temperature: %s Celsius\nWind Speed: %s m/s\nDescription: %s\n''' % (name,place,str(temp),wind,desc,name)
+    text = '''***WEATHER REPORT***\nAt %s, %s\nCurrent temperature: %s Celsius\nWind Speed: %s m/s\nDescription: %s\n''' % (name,place,temp,wind,desc,name)
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'% access_token
     response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":text}})
     status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)

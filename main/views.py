@@ -14,6 +14,7 @@ verify_token = '8510865767'
 yo_token = 'a9e75c9f-a085-4c5f-be02-4faa915eac29'
 yo_username = 'EMORRES25'
 #url = 'http://api.wordnik.com:80/v4/word.json/tycoon/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5'
+'''
 def get_meaning(fbid, recieved_message):
     url = 'http://api.wordnik.com:80/v4/word.json/' + recieved_message.lower() + '/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5'
     try:
@@ -26,10 +27,20 @@ def get_meaning(fbid, recieved_message):
     response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":fdata}})
     status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
     pprint(status.json())
-
+'''
 def send_yo():
     requests.post("http://api.justyo.co/yo/", data={'api_token': yo_token, 'username': yo_username, 'text': "dictbot was recently used."})
 
+def get_weather(fbid, lati,longi):
+    url = 'api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s' % (lati,longi)
+    r = requests.get(url)
+    data = r.text().json()
+    main = data['weather'][0]['description']
+
+    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'% access_token
+    response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":main}})
+    status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
+    pprint(status.json())
 
 class dictbot(generic.View):
     def get(self, request, *args, **kwargs):
@@ -49,8 +60,13 @@ class dictbot(generic.View):
             for message in entry['messaging']: 
                 if 'message' in message: 
                     try:  
-                        get_meaning(message['sender']['id'], message['message']['text'])
-                        send_yo()
+                        lati = message['message']['attachments'][0]['payload']['coordinates']['lat']
+                        longi = message['message']['attachments'][0]['payload']['coordinates']['long']
+                        get_weather(message['sender']['id'], lati, longi)
+
+                        #get_meaning(message['sender']['id'], message['message']['attachments'][0]['payload']['coordinates'])
+                        #get_meaning(message['sender']['id'], message['message']['text'])
+                        #send_yo()
                     except Exception as e:
                         print e
                         get_meaning(message['sender']['id'], 'Please send a valid text.')    

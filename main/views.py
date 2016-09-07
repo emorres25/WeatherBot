@@ -63,7 +63,14 @@ class dictbot(generic.View):
                     try:  
                         lati = message['message']['attachments'][0]['payload']['coordinates']['lat']
                         longi = message['message']['attachments'][0]['payload']['coordinates']['long']
-                        get_weather(message['sender']['id'], lati, longi)
+
+                        text = "lat is: %s and long is %s" % (lati, longi)
+                        post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'% access_token
+                        response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":text})
+                        status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
+                        pprint(status.json())
+
+                        #get_weather(message['sender']['id'], lati, longi)
 
                         #get_meaning(message['sender']['id'], message['message']['attachments'][0]['payload']['coordinates'])
                         #get_meaning(message['sender']['id'], message['message']['text'])

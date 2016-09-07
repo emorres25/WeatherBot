@@ -44,6 +44,13 @@ def get_weather(fbid, lati,longi):
     pprint(status.json())
 '''
 
+def post_msg(fbid,text):
+    post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'% access_token
+    response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":text}})
+    status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
+    pprint(status.json())
+
+
 class dictbot(generic.View):
     def get(self, request, *args, **kwargs):
         if self.request.GET['hub.verify_token'] == verify_token:
@@ -64,12 +71,13 @@ class dictbot(generic.View):
                     try:  
                         #lati = message['message']['attachments'][0]['payload']['coordinates']['lat']
                         #longi = message['message']['attachments'][0]['payload']['coordinates']['long']
-                        #post_msg(message['sender']['id'], text)
+                        text = "Hi!"
+                        post_msg(message['sender']['id'], text)
 
                         #get_weather(message['sender']['id'], lati, longi)
 
                         #get_meaning(message['sender']['id'], message['message']['attachments'][0]['payload']['coordinates'])
-                        get_meaning(message['sender']['id'], message['message']['text'])
+                        #get_meaning(message['sender']['id'], message['message']['text'])
                         #send_yo()
                     except Exception as e:
                         print e

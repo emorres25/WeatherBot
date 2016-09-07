@@ -37,7 +37,7 @@ def get_weather(fbid, lati,longi):
     r = requests.get(url)
     data = json.loads(r.text)
     place = data['sys']['country']
-    temp = data['main']['temp']
+    temp = str(int(data['main']['temp']) - 273)
     wind = data['wind']['speed']
     #rain = data['rain']['3h']
     name = data['name']

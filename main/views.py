@@ -61,9 +61,10 @@ class dictbot(generic.View):
             for message in entry['messaging']: 
                 if 'message' in message: 
                     try:  
-                        lati = message['message']['attachments'][0]['payload']['coordinates']['lat']
-                        longi = message['message']['attachments'][0]['payload']['coordinates']['long']
-
+                        #lati = message['message']['attachments'][0]['payload']['coordinates']['lat']
+                        #longi = message['message']['attachments'][0]['payload']['coordinates']['long']
+                        lati = 'papa'
+                        longi = 'mama'
                         text = "lat is: %s and long is %s" % (lati, longi)
                         post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'% access_token
                         response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":text})

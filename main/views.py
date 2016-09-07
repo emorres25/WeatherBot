@@ -13,6 +13,7 @@ access_token = 'EAAZAd1C9D1SkBAF5Vsb0j3MpNtAZCoDYWMiSdoNzPMdxfv4eC1Ai9E6GoWhkSUS
 verify_token = '8510865767'
 yo_token = 'a9e75c9f-a085-4c5f-be02-4faa915eac29'
 yo_username = 'EMORRES25'
+weather_api = 'cbeab3a7abb6575f1db5828d3cee0f06'
 #url = 'http://api.wordnik.com:80/v4/word.json/tycoon/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5'
 '''
 def get_meaning(fbid, recieved_message):
@@ -32,7 +33,7 @@ def send_yo():
     requests.post("http://api.justyo.co/yo/", data={'api_token': yo_token, 'username': yo_username, 'text': "dictbot was recently used."})
 
 def get_weather(fbid, lati,longi):
-    url = 'api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s' % (lati,longi)
+    url = 'api.openweathermap.org/data/2.5/weather?lat=%s&lon=%s&APPID=%s' % (lati,longi,weather_api)
     r = requests.get(url)
     data = r.text().json()
     main = data['weather'][0]['description']

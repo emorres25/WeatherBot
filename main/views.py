@@ -49,13 +49,12 @@ def get_weather(fbid, lati,longi):
     status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
     pprint(status.json())
 
-'''
+
 def post_msg(fbid,text):
     post_message_url = 'https://graph.facebook.com/v2.6/me/messages?access_token=%s'% access_token
     response_msg = json.dumps({"recipient":{"id":fbid}, "message":{"text":text}})
     status = requests.post(post_message_url, headers={"Content-Type": "application/json"},data=response_msg)
     pprint(status.json())
-'''
 
 class dictbot(generic.View):
     def get(self, request, *args, **kwargs):
@@ -87,5 +86,6 @@ class dictbot(generic.View):
                         #send_yo()
                     except Exception as e:
                         print e
-                        get_meaning(message['sender']['id'], 'Please send a valid text.')    
+                        post_msg(message['sender']['id'], "Oops!")
+                        #get_meaning(message['sender']['id'], 'Please send a valid text.')    
         return HttpResponse()
